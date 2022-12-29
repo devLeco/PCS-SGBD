@@ -1,0 +1,123 @@
+.nav {
+    color: #b30000;
+    font-weight: bold;
+}
+
+#navegacao {
+    background-color: #ffff99;
+}
+
+.pesqEstabelecimento {
+    margin-left: 15cm;
+}
+
+.input {
+    width: 300px;
+    height: 30px;
+}
+
+.btn-group {
+    margin-top: 1cm;
+    margin-left: 1cm;
+}
+
+.blockCampo {
+    margin-left: 2cm;
+}
+
+.grid {
+    margin-top: 1cm;
+    margin-left: 1cm;
+}
+
+.txt {
+    color: #4d4d4d;
+    font-wheigth: bold;
+    margin-left: 1cm;
+}
+
+.corpoCard {
+    width: 300px;
+    height: 550px;
+}
+
+.star {
+    font-size: 12pt;
+    color: #404040;
+}
+
+.starIcon {
+    margin-left: 0.5cm;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 0.3cm;
+}
+
+.titleEstabelecimento {
+    font-size: 15pt;
+    color: #e68a00;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #094CFA;
+    width: 95%;
+}
+
+.combo {
+    margin-left: 1cm;
+    margin-top: 0.5cm;
+}
+
+.filtro {
+    font-size: 12pt;
+    color: grey;
+}
+
+.tel {
+    font-size: 12pt;
+    color: #404040;
+}
+
+.isclosed {
+    color: green;
+    margin-left: 1.5cm;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.pequeno {
+    font-size: 12pt;
+    color: grey;
+    width: 50%;
+}
+
+.distancia {
+    font-size: 12pt;
+    color: grey;
+    width: 50%;
+}
+
+.moneyIcon {
+    margin-left: 0.2cm;
+}
+
+.money {
+    font-size: 12pt;
+    color: grey;
+    width: 50%;
+}
+
+.end {
+    color: #404040;
+    font-size: 10pt;
+}
+
+.urlsite {
+    margin-left: 1.3cm;
+}
+
+.fotoCard {
+    max-height: 260px;
+    max-width: 300px;
+}

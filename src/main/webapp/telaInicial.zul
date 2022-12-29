@@ -1,0 +1,70 @@
+<?page title="Delirando de Fome"?>
+<?style href="/resources/css/default.css" type="text/css" ?>
+<?style href="/resources/bootstrap/v3/css/bootstrap.min.css" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk xmlns:n="http://www.zkoss.org/2005/zk/native">
+     <n:link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+    <vlayout self="@define(content)" viewModel="@id('vm') @init('view.TelaInicialPesquisarEndereco')" validationMessages="@id('vmsgs')" hflex="true">
+         <window id="win" apply="view.TelaInicialPesquisarEndereco">
+            
+             <div id="locationContainer" xmlns:w="client" w:onBind="requestLocation(this)"> </div>
+            
+             <n:div class="img" width="100%" height="100%">
+                 
+             <div class="blockText">
+             <space />  
+             	<div class="row"><space />  </div><div class="row"></div>
+                 <n:h1 class="display-4">Ponto de partida</n:h1>
+                 <div class="input-group mb-3 pt">
+                     <div class="input-group-prepend">
+                         <n:span class="input-group-text">
+                             <n:img src="https://static.thenounproject.com/png/101791-200.png" width="10" height="10" alt="pesquisar" />
+                         </n:span>
+                     </div>
+                     <div class="custom-file">
+                         <textbox type="text" class="form-control" placeholder="Estou na localização..." value="@bind(vm.localizacao)" />
+                         <button class="btn btn-danger" label="Buscar" onClick="@command('pesquisarProximo')" type="button" />
+                     </div>
+                 </div>
+             </div>
+           
+    </n:div>
+     
+        </window>
+    
+        <style>
+         .img{
+            background: url("https://imgur.com/EqrbI8y.png");
+            width: 100%;
+            height: 450px;
+            
+         }
+         
+         .blockText{
+            width: 450px;
+            margin-top: 9.5cm;
+            left: 13cm;
+            position: absolute;
+          }
+          
+          .input-group-text{
+            background-color:red;
+          }
+          
+         </style> 
+         
+         <script type="text/javascript">
+         
+             function requestLocation(wgt) {
+              navigator.geolocation.getCurrentPosition(fireOnLocation.bind(wgt));
+            }
+            function fireOnLocation(pos) {
+              this.fire('onLocation', {latitude: pos.coords.latitude, longitude: pos.coords.longitude}, {toServer: true})
+            }
+         </script>
+         
+         
+         
+    </vlayout>
+
+</zk>

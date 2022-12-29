@@ -1,0 +1,167 @@
+<?page title="Delirando de Fome"?>
+<?style href="/resources/css/default.css" type="text/css" ?>
+<?style href="/resources/css/procurarLocais.css" type="text/css" ?>
+<?style href="/resources/bootstrap/v3/css/bootstrap.min.css" ?>
+<?init class="org.zkoss.zk.ui.util.Composition"?>
+<zk xmlns:n="http://www.zkoss.org/2005/zk/native">
+    <n:link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+    <vlayout self="@define(content)" viewModel="@id('vm') @init('view.TelaEstabelecimentoSelecionado')" validationMessages="@id('vmsgs')" hflex="true">
+        <window id="win">
+
+            <n:nav id="navegacao" class="navbar">
+                <div class="nav">
+                    <n:h1 class="display-3">Delirando de Fome</n:h1>
+                </div>
+            </n:nav>
+
+            <n:hr />
+
+        </window>
+
+        <div sclass="container">
+            <div children="@bind(vm.estabelecimento) @template('cell-template')">
+
+
+                <template name="cell-template">
+                    <div class="row">
+
+                        <div class="col-6">
+                            <n:h1 class="display-4">
+                                <label sclass="title" value="@bind(vm.estabelecimento.nomeEstabelecimento)"></label>
+                            </n:h1>
+                            <space />
+                            <div class="row">
+                                <div class="col-6   ">
+                                    <image src="https://i.pinimg.com/originals/3e/27/b3/3e27b343475a2444ae725ad6ce5823d9.png" width="25px" height="25px" />
+                                    <label sclass="telefone" value="@bind(vm.estabelecimento.telefone)" />
+                                </div>
+                                <div class="col-4">
+                                    <image class="starIcon" src="https://static.thenounproject.com/png/5602-200.png" width="35px" height="35px" />
+                                    <label sclass="star" value="@bind(vm.estabelecimento.estrela)" />
+                                    <label sclass="star">/5</label>
+                                </div>
+                            </div>
+                            <space />
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <image class="moneyIcon" src="https://icon-library.com/images/money-icon/money-icon-1.jpg" width="35px" height="35px" />
+                                        <label sclass="money" value="@bind(vm.estabelecimento.preco)" />
+                                    </div>
+                                    <space />
+                                    <div class="row">
+                                        <image src="https://img.icons8.com/all/500/domain.png" width="25px" height="25px" />
+                                        <a sclass="site" href="@bind(vm.estabelecimento.urlSite)" label="Visite!">Ir para o site</a>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label>Status do local:</label>
+                                    <label class="isclosed" value="@bind(vm.estabelecimento.isClosed)" />
+                                    <space />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <image class="siteFoto" src="@load(vm.estabelecimento.urlFoto)" width="300px" height="300px" />
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row">
+                                <n:h1 class="display-4">
+                                    <label sclass="comoChegar">Como chegar?</label>
+                                </n:h1>
+                            </div>
+                            <div class="row">
+                                <image sclass="dista" width="35px" height="35px" src="https://static.thenounproject.com/png/236772-200.png" />
+                                <label sclass="dista" value="@bind(vm.estabelecimento.enderecoEstabelecimento.distancia)" />
+                            </div>
+
+                            <div sclass="location">
+                                <label sclass="local">Local</label>
+                                <space />
+                                <image src="https://i.pinimg.com/originals/7a/80/c9/7a80c9fbeb2158487b68c827a17bbbea.png" width="25px" height="25px" />
+                                <label sclass="location" value="@bind(vm.estabelecimento.enderecoEstabelecimento.endereco)" />
+                                -
+                                <label sclass="location" value="@bind(vm.estabelecimento.enderecoEstabelecimento.cidade)" />
+                                -
+                                <label sclass="location" value="@bind(vm.estabelecimento.enderecoEstabelecimento.regiao)" />
+                                -
+                                <label sclass="location" value="@bind(vm.estabelecimento.enderecoEstabelecimento.cep)" />
+                            </div>
+
+                            <div class="row">
+                                <a href="@bind(vm.estabelecimento.enderecoEstabelecimento.rotaMapa)" src="https://i.imgur.com/tTXcGbT.png" width="50px" height="50px"></a>
+                            </div>
+                            <div class="row">
+                                <n:h1 class="display-4"></n:h1>
+                            </div>
+                        </div>
+                    </div>
+                    <space />
+
+                </template>
+            </div>
+
+        </div>
+        <space />
+        <div sclass="container">
+            <n:h1 class="display-3" sclass="title">Fotos do Estabelecimento</n:h1>
+            <div children="@bind(vm.estabelecimento.fotosEstabelecimento) @template(forEachStatus.index % 3 eq 0 ? 'linha' : 'coluna')">
+
+                <template name="linha">
+                    <div sclass="row" />
+                    <div class="col-4 tt">
+                        <image src="@bind(each)" width="124px" height="124px" />
+                    </div>
+                </template>
+                <template name="coluna">
+                    <div class="col-4 tt">
+                        <image src="@load(each)" width="124px" height="124px" />
+                    </div>
+                </template>
+
+            </div>
+        </div>
+
+        <style>
+            .nav{ color: #b30000; font-weight: bold; }
+
+            #navegacao{ background-color: #ffff99; }
+
+            .title{ font-size: 22pt; color: #cc5200; }
+
+            .telefone{ font-size: 14pt; color: #404040; }
+
+            .site{ font-size: 15pt; color: grey; } 
+            
+            .star{ font-size: 24pt; color: #404040; }
+
+            .starIcon{ margin-bottom: 0.5cm; } 
+            
+            .local{ color: grey; font-size: 10pt; margin-top: 1cm; }
+
+            .money{ font-size: 24pt; color: #404040; }
+
+            .isclosed{ color: green; font-size: 12pt; font-weight: bold; }
+
+            .comoChegar{ font-size: 22pt; color: #404040; }
+
+            .dista{ font-size: 12pt; color: grey; margin-top: 0.4cm; } 
+            
+            .location{ margin-top: 0.5cm; font-size: 12pt; color: #404040; }
+            
+            .siteFoto{ margin-top: 0.8cm; margin-left: 1.2cm; } 
+            
+            .tt{ margin-top: 0.8cm; margin-left: 1.2cm; }
+
+
+
+
+        </style>
+    </vlayout>
+
+</zk>

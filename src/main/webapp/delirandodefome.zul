@@ -1,0 +1,164 @@
+<?page title="Delirando de Fome"?>
+<?style href="/resources/css/default.css" type="text/css" ?>
+<?style href="/resources/css/procurarLocais.css" type="text/css" ?>
+<?style href="/resources/bootstrap/v3/css/bootstrap.min.css" ?>
+<!-- authentication init have to locate before composition -->
+<?init class="org.zkoss.zk.ui.util.Composition" ?>
+
+<zk xmlns:n="http://www.zkoss.org/2005/zk/native">
+ <n:link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+	<vlayout  viewModel="@id('vm') @init('view.TelaDelirandoDeFome')" validationMessages="@id('vmsgs')" hflex="true">
+	<window id="win" hflex="true" >
+
+
+			<n:nav id="navegacao" class="navbar">
+                <div class="nav">
+                    <n:h1 class="display-3">Delirando de Fome</n:h1>
+                </div>
+                <n:div class=" pesqEstabelecimento">
+                    <textbox class="input" placeholder="Search" value="@bind(vm.localizacao)" />
+                    <button class="btn btn-danger btn-lg" onClick="@command('pesquisarSelecionado')" type="button">alterar local</button>
+                     <a sclass="urlsite" href="login.zul">
+                                            <label>Fazer Login</label>
+					</a>
+					 <a sclass="urlsite" href="cadastro.zul">
+                                            <label>Fazer Cadastro</label>
+                      </a>
+                </n:div>
+            </n:nav>
+
+
+            <div class="blockCampo">
+                <div class="input-group mb-3 pt">
+                    <div class="input-group-prepend">
+                        <n:span class="input-group-text">
+                            <n:img src="https://static.thenounproject.com/png/101791-200.png" width="15" height="30" alt="pesquisar" />
+                        </n:span>
+                    </div>
+                    <div class="custom-file">
+                        <textbox id="buscar" type="text" class="input" placeholder="Buscar por estabelecimento" value="@bind(vm.buscarEstabelecimento)" />
+                        <button class="btn btn-danger btn-lg" label="Buscar" onClick="@command('buscarEstabelecimento')" type="button" />
+                    </div>
+                </div>
+            </div>
+            <space />
+            <n:hr />
+
+            <n:h1 class="display-3 txt">+ Perto de você</n:h1>
+
+            <label class="combo filtro">Filtrar por</label>
+            <combobox class="combo" model="@load(vm.tiposFiltros)" selectedItem="@bind(vm.tipoFiltroSelecionado)" cols="12">
+                <template name="model">
+                    <comboitem label="@load(each)" />
+                </template>
+            </combobox>
+
+        </window>
+
+
+        <div sclass="container">
+            <div children="@bind(vm.estabelecimentos) @template(forEachStatus.index % 3 eq 0 ? 'row-template' : 'cell-template')">
+
+                <template name="row-template">
+                    <div sclass="row" />
+                    <div sclass="col-sm-4">
+                        <div class="grid">
+                            <div class="corpoCard">
+                                <n:div class="card">
+                                    <image src="@load(each.urlFoto)" class="card-img-top fotoCard" />
+                                    <n:div class="card-body">
+                                        <n:h5 class="card-title">
+                                            <label class="titleEstabelecimento" value="@bind(each.nomeEstabelecimento)" />
+                                            <image class="starIcon" src="https://static.thenounproject.com/png/5602-200.png" width="2" height="2" />
+                                            <label sclass="star" value="@bind(each.estrela)" />
+                                            <label sclass="star">/5</label>
+                                        </n:h5>
+                                        <n:p class="card-text">
+                                            <image src="https://i.pinimg.com/originals/3e/27/b3/3e27b343475a2444ae725ad6ce5823d9.png" width="15px" height="15px" />
+                                            <label sclass="tel" value="@bind(each.telefone)" />
+                                            <label class="isclosed" value="@bind(each.isClosed)" />
+                                        </n:p>
+                                        <n:p class="card-text">
+                                            <label value="@bind(each.enderecoEstabelecimento.endereco)" />
+                                            -
+                                            <label value="@bind(each.enderecoEstabelecimento.cidade)" />
+                                            -
+                                            <label value="@bind(each.enderecoEstabelecimento.regiao)" />
+                                            -
+                                            <label value="@bind(each.enderecoEstabelecimento.cep)" />
+                                        </n:p>
+                                        <n:p class="card-text">
+                                            <n:small class="text-muted pequeno">
+                                                    <image width="25px" height="25px" src="https://static.thenounproject.com/png/236772-200.png" />
+                                                    <label sclass="distancia" value="@bind(each.enderecoEstabelecimento.distancia)" /><image sclass="moneyIcon" src="https://icon-library.com/images/money-icon/money-icon-1.jpg" width="15px" height="15px" />
+                                                    <label sclass="money" value="@bind(each.preco)" />
+                                                  
+                                            </n:small>
+                                        </n:p>
+                                        <button label="Ver detalhes" iconSclass="z-icon-plus" type="button" class="btn btn-warning btn-lg" mold="os" hflex="1" onClick="@command('verDetalhes', estabelecimento=each)" />
+                                        <a sclass="urlsite" href="@load(each.urlSite)">
+                                            <image src="/resources/imagem/site.png" width="25px" height="25px" />
+                                            <label>acesse o site</label>
+                                        </a>
+
+                                    </n:div>
+                                </n:div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <template name="cell-template">
+                    <div sclass="col-sm-4">
+                        <div class="grid">
+                            <div class="corpoCard">
+                                <n:div class="card">
+                                    <image src="@load(each.urlFoto)" class="card-img-top fotoCard" />
+                                    <n:div class="card-body">
+                                        <n:h5 class="card-title">
+                                            <label class="titleEstabelecimento" value="@bind(each.nomeEstabelecimento)" />
+                                            <image class="starIcon" src="https://static.thenounproject.com/png/5602-200.png" width="2" height="2" />
+                                            <label sclass="star" value="@bind(each.estrela)" />
+                                            <label sclass="star">/5</label>
+                                        </n:h5>
+                                        <n:p class="card-text">
+                                            <image src="https://i.pinimg.com/originals/3e/27/b3/3e27b343475a2444ae725ad6ce5823d9.png" width="15px" height="15px" />
+                                            <label sclass="tel" value="@bind(each.telefone)" />
+                                            <label class="isclosed" value="@bind(each.isClosed)" />
+                                        </n:p>
+                                        <n:p class="card-text">
+                                            <label value="@bind(each.enderecoEstabelecimento.endereco)" />
+                                            -
+                                            <label value="@bind(each.enderecoEstabelecimento.cidade)" />
+                                            -
+                                            <label value="@bind(each.enderecoEstabelecimento.regiao)" />
+                                            -
+                                            <label value="@bind(each.enderecoEstabelecimento.cep)" />
+                                        </n:p>
+                                        <n:p class="card-text">
+                                            <n:small class="text-muted pequeno">
+                                                <image width="25px" height="25px" src="https://static.thenounproject.com/png/236772-200.png" />
+                                                <label sclass="distancia" value="@bind(each.enderecoEstabelecimento.distancia)" />
+                                                <image sclass="moneyIcon" src="https://icon-library.com/images/money-icon/money-icon-1.jpg" width="15px" height="15px" />
+                                                <label sclass="money" value="@bind(each.preco)" />
+                                            </n:small>
+                                        </n:p>
+                                        <button label="Ver detalhes" iconSclass="z-icon-plus" type="button" class="btn btn-warning btn-lg" mold="os" hflex="1" onClick="@command('verDetalhes', estabelecimento=each)" />
+                                        <a sclass="urlsite" href="@load(each.urlSite)">
+                                            <image src="/resources/imagem/site.png" width="25px" height="25px" />
+                                            <label>acesse o site</label>
+                                        </a>
+
+                                    </n:div>
+                                </n:div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+        </div>
+        
+
+</vlayout>
+</zk>

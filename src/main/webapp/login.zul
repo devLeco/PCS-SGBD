@@ -1,0 +1,87 @@
+<?page title="Delirando de Fome"?>
+<?style href="/resources/css/default.css" type="text/css" ?>
+<?style href="/resources/bootstrap/v3/css/bootstrap.min.css" ?>
+<zk xmlns:n="http://www.zkoss.org/2005/zk/native">
+     <n:link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+    <vlayout self="@define(content)" viewModel="@id('vm') @init('view.TelaLogin')" validationMessages="@id('vmsgs')" hflex="true">
+         <window id="win" title="Login" border="normal" width="900px" height="600px">
+	
+	<div style="margin-left:8px; padding:20px;">
+		Delirando de Fome  - Login
+	</div>
+	<vbox hflex="min" align="center">
+		<grid hflex="min">
+                    <rows>
+                       <row>
+                          <label>Usuário ou email:</label>
+                           <textbox id="email" value="@bind(vm.nomeUsuario)" width="200px" />
+                        </row>
+                         <row>
+                           Senha :
+                         	<textbox id="senha" type="password" value="@bind(vm.senha)" width="200px" />
+                          </row>
+                          <row>
+                          	<label id="message" sclass="warn" value="&#160;" />
+                   			<button id="login" class="btn btn-info btn-lg" onClick="@command('autenticarLogin')" type="button">Login</button>
+                          </row>
+                          <row width="100%"><label value="@bind(vm.validarLogin)"/>  </row>
+                          <row>
+                          	Faça login também por: 
+                          			<div class="col-6">
+                          			 <a sclass="urlsite" href="https://mail.google.com/mail/">
+                                            <image src="https://ucsfm.com.br/wp-content/uploads/2020/10/SITE-07-10-2020-3-800x445.jpg" width="25px" height="25px" />
+                                        </a>  -  <a sclass="urlsite" href="https://pt-br.facebook.com/">
+                                            <image src="https://i.pinimg.com/originals/70/f9/36/70f936294a1f0f3949a9205df9340d5e.png" width="25px" height="25px" />
+                                        </a>
+                                        </div>
+                          </row>
+                           <row> <button id="windowRecSenha" label="Esqueceu a senha?" onClick="@command('abrirRecSenha')"   autodisable="self" /></row>
+                <row> <button id="windowRecUsuario" label="Esqueceu o usuário?" onClick="@command('abrirRecUsuario')" autodisable="self" /> </row>
+                         </rows>
+            </grid>
+	 </vbox>
+</window>
+
+
+		<window id="windowSenha" closable="true" position="center,center" title="Recuperar Senha" visible="false" width="50%">
+			<grid width="100%">
+			   <rows>
+                <row>
+                    <cell sclass="row-title">Email:</cell>
+                    <cell>
+                    <textbox id="emailRecuperacao" value="@bind(vm.email)"  constraint="/.+@.+\.[a-z]+/: Insira um email válido" width="200px"/>
+                    </cell>
+                </row>
+                <row><label value="@bind(vm.validarLogin)"></label> </row>
+                </rows>
+			</grid>
+			<hlayout width="100%">
+				<button id="btnFechar" label="Cancelar" class="btn btn-info btn-lg" onClick="windowSenha.setVisible(false)" />
+				<button id="btnEnviar" label="Enviar"  class="btn btn-info btn-lg" onClick="@command('recuperarSenha')" type="button" /> 
+			</hlayout>
+		 </window>
+		
+		<window id="windowUsu" closable="true" position="center,center" title="Recuperar conta" visible="false" width="50%">
+			<grid width="100%">
+			  <rows>
+                <row>
+                    <cell sclass="row-title">Insira o email de recuperação:</cell>
+                    <cell>
+                    <textbox id="emailRecuperacao" value="@bind(vm.emailRecuperacao)"  constraint="/.+@.+\.[a-z]+/: Insira um email válido" width="200px"/>
+                    </cell>
+                </row>
+                  	<row><label value="@bind(vm.validarLogin)"></label> </row>
+                </rows>
+			</grid>
+		<hlayout width="100%">
+				<button id="btnFechar" label="Cancelar" class="btn btn-info btn-lg" onClick="windowUsu.setVisible(false)" />
+				<button id="recSenha" label="Enviar"  class="btn btn-info btn-lg" onClick="@command('recuperarEmailUsuario')" type="button" /> 
+			</hlayout>
+		 </window>
+
+
+
+
+</vlayout>
+
+</zk>
